@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "IoTHubDeviceStreamSample.ServiceProxy": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "IOTHUB_CONNECTION_STRING": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "IoTHubDeviceStreamSample.ServiceProxy": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "IOTHUB_DEVICE_CONNECTION_STRING": "",
+        "REMOTE_HOST_NAME": "localhost",
+        "REMOTE_PORT": "2222"
+      }
+    }
+  }
+}
