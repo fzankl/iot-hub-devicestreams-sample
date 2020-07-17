@@ -3,7 +3,6 @@
     "IoTHubDeviceStreamSample.ServiceProxy": {
       "commandName": "Project",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
         "IOTHUB_SERVICE_CONNECTION_STRING": "",
         "IOTHUB_DEVICE_IDENTIFIER": "",
         "SSH_PORT": "2222"

@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "IoTHubDeviceStreamSample.ServiceProxy": {
+    "IoTHubDeviceStreamSample.DeviceProxy": {
       "commandName": "Project",
       "environmentVariables": {
         "IOTHUB_DEVICE_CONNECTION_STRING": "",
