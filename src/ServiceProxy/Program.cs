@@ -8,19 +8,27 @@ namespace IoTHubDeviceStreamSample.ServiceProxy
 {
     public static class Program
     {
-        public static async Task<int> Main()
+        public static async Task<int> Main(string[] args)
         {
             var logger = CreateLogger();
 
-            var deviceConnectionString = GetEnvironmentVariableValue("IOTHUB_CONNECTION_STRING", string.Empty);
+            var serviceConnectionString = GetEnvironmentVariableValue("IOTHUB_SERVICE_CONNECTION_STRING", string.Empty);
+            var deviceId = GetEnvironmentVariableValue("IOTHUB_DEVICE_IDENTIFIER", string.Empty);
+            var port = GetEnvironmentVariableValue("SSH_PORT", 2222);
 
-            if (string.IsNullOrWhiteSpace(deviceConnectionString))
+            if (string.IsNullOrWhiteSpace(serviceConnectionString))
             {
                 logger.LogCritical("Please provide a connection string, device identifier and local port.");
                 return 1;
             }
 
-            var serviceClient = ServiceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Amqp);
+            if (string.IsNullOrWhiteSpace(deviceId))
+            {
+                logger.LogCritical("Invalid device identifier provided.");
+                return 1;
+            }
+
+            var serviceClient = ServiceClient.CreateFromConnectionString(serviceConnectionString, TransportType.Amqp);
 
             if (serviceClient == null)
             {
@@ -28,11 +36,37 @@ namespace IoTHubDeviceStreamSample.ServiceProxy
                 return 1;
             }
 
-            var streamingProxy = new DeviceStream(serviceClient, "iot-device-sample", 2222, logger);
+            ShowApplicationInformation(serviceConnectionString, deviceId, port);
+
+            var streamingProxy = new DeviceStream(serviceClient, deviceId, port, logger);
             await streamingProxy.RunAsync(new CancellationTokenSource()).ConfigureAwait(false);
 
             logger.LogInformation("Shutdown completed.");
             return 0;
+        }
+
+        private static void ShowApplicationInformation(string serviceConnectionString, string deviceId, int port)
+        {
+            var connectionStringBuilder = IotHubConnectionStringBuilder.Create(serviceConnectionString);
+
+            Console.WriteLine("Microsoft Azure IoT Hub - DeviceStreams");
+            Console.WriteLine("Example: How to establish a SSH connection to IoT devices");
+            Console.WriteLine(">>> ServiceProxy <<<");
+            Console.WriteLine("\n-------------------------------------------------------\n");
+
+            Console.WriteLine("IoT Hub-Configuration");
+            Console.WriteLine($" > IoT Hub: {connectionStringBuilder.HostName}");
+            Console.WriteLine($" > SharedAccessKeyName: {connectionStringBuilder.SharedAccessKeyName}");
+            Console.WriteLine($" > Device identifier: {deviceId}\n");
+
+            Console.WriteLine("SSH-Configuration");
+            Console.WriteLine(" > Host: localhost");
+            Console.WriteLine($" > Port: {port}\n");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine($" ssh localhost -p {port}");
+            Console.ResetColor();
+
+            Console.WriteLine("\n-------------------------------------------------------\n");
         }
 
         private static ILogger CreateLogger()

@@ -4,8 +4,8 @@
       "commandName": "Project",
       "environmentVariables": {
         "IOTHUB_DEVICE_CONNECTION_STRING": "",
-        "REMOTE_HOST_NAME": "localhost",
-        "REMOTE_PORT": "2222"
+        "SSH_DAEMON_HOSTNAME": "localhost",
+        "SSH_DAEMON_PORT": "22"
       }
     }
   }

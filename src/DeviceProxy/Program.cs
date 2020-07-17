@@ -13,8 +13,8 @@ namespace IoTHubDeviceStreamSample.DeviceProxy
             var logger = CreateLogger();
 
             var deviceConnectionString = GetEnvironmentVariableValue("IOTHUB_DEVICE_CONNECTION_STRING", string.Empty);
-            var hostName = GetEnvironmentVariableValue("REMOTE_HOST_NAME", "localhost");
-            var port = GetEnvironmentVariableValue("REMOTE_PORT", 22);
+            var hostName = GetEnvironmentVariableValue("SSH_DAEMON_HOSTNAME", "localhost");
+            var port = GetEnvironmentVariableValue("SSH_DAEMON_PORT", 22);
 
             if (string.IsNullOrWhiteSpace(deviceConnectionString))
             {
@@ -30,12 +30,34 @@ namespace IoTHubDeviceStreamSample.DeviceProxy
                     return 1;
                 }
 
+                ShowApplicationInformation(deviceConnectionString, hostName, port);
+
                 var streamingProxy = new DeviceStream(deviceClient, hostName, port, logger);
                 await streamingProxy.RunAsync(new CancellationTokenSource()).ConfigureAwait(false);
             }
 
             logger.LogInformation("Shutdown completed.");
             return 0;
+        }
+
+        private static void ShowApplicationInformation(string deviceConnectionString, string hostName, int port)
+        {
+            var connectionStringBuilder = IotHubConnectionStringBuilder.Create(deviceConnectionString);
+
+            Console.WriteLine("Microsoft Azure IoT Hub - DeviceStreams");
+            Console.WriteLine("Example: How to establish a SSH connection to IoT devices");
+            Console.WriteLine(">>> DeviceProxy <<<");
+            Console.WriteLine("\n-------------------------------------------------------\n");
+
+            Console.WriteLine("IoT Hub-Configuration");
+            Console.WriteLine($" > IoT Hub: {connectionStringBuilder.HostName}");
+            Console.WriteLine($" > Device identifier: {connectionStringBuilder.DeviceId}\n");
+
+            Console.WriteLine("SSH-Configuration");
+            Console.WriteLine($" > Host: {hostName}");
+            Console.WriteLine($" > Port: {port}");
+
+            Console.WriteLine("\n-------------------------------------------------------\n");
         }
 
         private static ILogger CreateLogger()
