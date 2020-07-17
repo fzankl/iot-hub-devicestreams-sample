@@ -12,3 +12,7 @@ This example shows how to work with Azure IoT Hub - Device Streams when using SS
 `DeviceProxy` and `ServiceProxy` communicates with each other using created WebSocket via streaming endpoint of Azure IoT Hub.
 
 Further information: https://docs.microsoft.com/de-de/azure/iot-hub/iot-hub-device-streams-overview
+
+## How to run this sample
+
+To run this example you have to provide valid IoT Hub configuration via *launchSettings.json* for DeviceProxy and ServiceProxy.
