@@ -20,9 +20,9 @@ namespace IoTHubDeviceStreamSample.ServiceProxy
 
         private TcpListener _tcpListener;
 
-        public DeviceStream(ServiceClient deviceClient, string deviceId, int localPort, ILogger logger)
+        public DeviceStream(ServiceClient serviceClient, string deviceId, int localPort, ILogger logger)
         {
-            _serviceClient = deviceClient;
+            _serviceClient = serviceClient;
             _deviceId = deviceId;
             _localPort = localPort;
             _logger = logger;
@@ -40,7 +40,7 @@ namespace IoTHubDeviceStreamSample.ServiceProxy
             {
                 var tcpClient = await _tcpListener.AcceptTcpClientAsync().ConfigureAwait(false);
 
-                _logger.LogInformation("Accepted TCP client using endpoint '{0}'.", tcpClient.Client.LocalEndPoint.ToString() ?? string.Empty);
+                _logger.LogInformation("Accepted TCP client using endpoint '{0}'.", tcpClient.Client.LocalEndPoint.ToString());
 
                 await HandleIncomingConnectionsAndCreateStreams(_deviceId, _serviceClient, tcpClient, cancellationTokenSource).ConfigureAwait(false);
             }
