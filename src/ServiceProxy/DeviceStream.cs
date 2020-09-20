@@ -62,7 +62,7 @@ namespace IoTHubDeviceStreamSample.ServiceProxy
                     {
                         try
                         {
-                            using (var remoteStream = await _deviceStreamClientFactory.CreateAsync(result.Url, result.AuthorizationToken, cancellationTokenSource.Token).ConfigureAwait(false))
+                            using (var remoteStream = await _deviceStreamClientFactory.CreateAsync(result.Uri, result.AuthorizationToken, cancellationTokenSource.Token).ConfigureAwait(false))
                             {
                                 _logger.LogInformation("Streaming started for stream: {0}.", result.StreamName);
 
