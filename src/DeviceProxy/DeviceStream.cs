@@ -12,16 +12,16 @@ namespace IoTHubDeviceStreamSample.DeviceProxy
     internal class DeviceStream
     {
         private readonly DeviceClient _deviceClient;
-        private readonly string _host;
-        private readonly int _port;
+        private readonly string _sshDaemonHost;
+        private readonly int _sshDaemonPort;
         private readonly ILogger _logger;
         private readonly DeviceStreamClientFactory _deviceStreamClientFactory;
 
-        public DeviceStream(DeviceClient deviceClient, string host, int port, ILogger logger)
+        public DeviceStream(DeviceClient deviceClient, string sshDaemonHost, int sshDaemonPort, ILogger logger)
         {
             _deviceClient = deviceClient;
-            _host = host;
-            _port = port;
+            _sshDaemonHost = sshDaemonHost;
+            _sshDaemonPort = sshDaemonPort;
             _logger = logger;
             _deviceStreamClientFactory = new DeviceStreamClientFactory(logger);
         }
@@ -60,7 +60,7 @@ namespace IoTHubDeviceStreamSample.DeviceProxy
                 {
                     using (var tcpClient = new TcpClient())
                     {
-                        await tcpClient.ConnectAsync(_host, _port).ConfigureAwait(false);
+                        await tcpClient.ConnectAsync(_sshDaemonHost, _sshDaemonPort).ConfigureAwait(false);
 
                         using (var localStream = tcpClient.GetStream())
                         {
