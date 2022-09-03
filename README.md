@@ -11,9 +11,7 @@ This example shows how to work with Azure IoT Hub - Device Streams when using SS
 
 `DeviceProxy` and `ServiceProxy` communicates with each other using created WebSocket via streaming endpoint of Azure IoT Hub.
 
-Further information:
- * English: https://www.fzankl.de/en/blog/remote-access-for-iot-devices-using-azure-iot-hub
- * German: https://www.fzankl.de/de/blog/fernzugriff-auf-iot-geraete-mit-azure-iot-hub
+Further information: https://www.fzankl.de/en/blog/remote-access-for-iot-devices-using-azure-iot-hub
 
 ## How to run this sample
 
